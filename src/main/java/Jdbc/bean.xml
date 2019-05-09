@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	                    http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:property-placeholder location="Jdbc/jdbc.property"/>
+	<!-- org.springframework.jdbc.datasource.DriverManagerDataSource -->
+	<!-- 配置数据源 -->
+	<bean id="datasource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${driverClassName}"/>
+		<property name="jdbcUrl"      value="${url}" />
+		<property name="user" value="${username}"/>
+		<property name="password" value="${password}"/>
+	</bean>
+    <bean id="custTemplate" class ="Jdbc.customerImp">
+        <property name="dataSource" ref="datasource"></property>   
+    </bean>
+    <bean id="jdbcTemplate" class ="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="datasource"></property>   
+    </bean>
+    <bean id="custDAO" class ="Jdbc.custDAO">
+        <property name="JdbcTemplate" ref="jdbcTemplate"></property>   
+    </bean>
+
+
+</beans>

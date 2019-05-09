@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Person> 
+  <person id="zhangsan"> 
+    <name>zhangsan</name>  
+    <num>7777777</num> 
+  </person>  
+  <person id="lisi">
+    <name>lisi</name>
+    <num>99999</num>
+  </person>
+</Person>

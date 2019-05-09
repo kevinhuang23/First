@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring- aop.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	<!-- 指定使用request作用域 -->
+	<bean id="fufu" class="proxy.impl.DogImpl"></bean>
+	
+	<!-- 定时任务相关配置 -->
+    <task:executor id="executor" pool-size="10" queue-capacity="128"/>
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>
+	
+	<!-- 设值注入 -->
+	<bean id="heihei" class="proxy.impl.CatImpl">
+	   <property name="dogImpl" ref="fufu"></property>
+	   <property name="username" value="kingslanding-set"></property>
+	</bean>
+		
+	<!-- 构造注入 -->
+	<bean id="heihei1" class="proxy.impl.CatImpl">
+	   <constructor-arg name="dogImpl" ref="fufu"></constructor-arg>
+	   <constructor-arg name="username" value="kingslanding-construct"></constructor-arg>	   
+	</bean>	
+</beans>

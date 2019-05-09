@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	                    http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+                        
+    <!-- 启动@aspectj的自动代理支持-->
+    <aop:aspectj-autoproxy />
+	<!-- Jdk动态代理 -->
+	<bean id="waitor" class="proxy.impl.WaitorImp"></bean>
+	<bean id="before" class="proxy.impl.BeforeGreetingAdvice"></bean>
+		
+	<bean id="waitorProxy" class="org.springframework.aop.framework.ProxyFactoryBean"
+	  p:target-ref="waitor"
+	  p:interceptorNames="before"
+	  p:proxyInterfaces="proxy.Waitor"
+	>
+	</bean>
+	
+	<!-- cglib代理 -->
+	<bean id="userServe" class="proxy.impl.UserServiceImpl"></bean>
+		
+	<bean id="userProxy" class="org.springframework.aop.framework.ProxyFactoryBean"
+	  p:target-ref="userServe"
+	  p:interceptorNames="before"
+	  p:proxyTargetClass="true"
+	>
+	</bean>
+	
+	
+	
+	
+</beans>
